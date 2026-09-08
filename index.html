@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Composez votre propre recette de bière et regardez-la prendre forme en 3D en temps réel, en fond d'écran, pendant que vous répondez aux questions.">
+<meta name="theme-color" content="#0d0906">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍺</text></svg>">
+<title>Brasserie virtuelle — Composez votre bière</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Fond animé abstrait : dégradés qui respirent, colorés en direct selon
+     la recette (couleur du liquide), + bulles flottantes sur tout l'écran.
+     Purement décoratif (aria-hidden, non interactif). -->
+<div class="ambient-bg" id="ambient-bg" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand-mark" aria-hidden="true">🍺</span>
+    <div class="brand-text">
+      <h1>Brasserie virtuelle</h1>
+      <p class="tagline">Composez votre bière, comprenez ce que vous brassez.</p>
+    </div>
+  </div>
+</header>
+
+<nav class="progress-dots" id="progress-dots" aria-label="Progression de la composition"></nav>
+
+<div class="sheet-wrap">
+  <main class="sheet" id="control-sheet">
+
+    <div class="step active" data-step="fermentation">
+      <div class="step-head">
+        <span class="step-num">1 / 9</span>
+        <h2>Fermentation</h2>
+      </div>
+      <div class="segmented" id="control-fermentation" role="radiogroup" aria-label="Type de fermentation"></div>
+      <p class="step-text" id="text-fermentation"></p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev" disabled>Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="origin">
+      <div class="step-head">
+        <span class="step-num">2 / 9</span>
+        <h2>Tradition brassicole</h2>
+      </div>
+      <div class="segmented" id="control-origin" role="radiogroup" aria-label="Origine / tradition brassicole"></div>
+      <p class="step-text" id="text-origin"></p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="malt">
+      <div class="step-head">
+        <span class="step-num">3 / 9</span>
+        <h2>Malt de base</h2>
+      </div>
+      <div class="swatch-row" id="control-malt" role="radiogroup" aria-label="Malt de base"></div>
+      <p class="step-text" id="text-malt"></p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="hops">
+      <div class="step-head">
+        <span class="step-num">4 / 9</span>
+        <h2>Houblon</h2>
+      </div>
+      <div class="segmented" id="control-hop-profile" role="radiogroup" aria-label="Profil de houblon"></div>
+      <p class="step-text" id="text-hop-profile"></p>
+
+      <label class="slider-label" for="slider-hop">Quantité de houblon (amertume)</label>
+      <input type="range" id="slider-hop" min="0" max="10" step="0.5" value="4">
+      <div class="slider-scale"><span>Discret</span><span>Intense</span></div>
+      <p class="step-text step-text-muted" id="text-hop-amount"></p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="flavors">
+      <div class="step-head">
+        <span class="step-num">5 / 9</span>
+        <h2>Arômes complémentaires</h2>
+      </div>
+      <div class="chip-row" id="control-flavors" role="group" aria-label="Arômes complémentaires"></div>
+      <p class="step-text" id="text-flavors">Sélectionnez jusqu'à trois arômes pour affiner votre recette.</p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="sweetness">
+      <div class="step-head">
+        <span class="step-num">6 / 9</span>
+        <h2>Sucrosité</h2>
+      </div>
+      <label class="slider-label" for="slider-sweetness">Taux de sucre résiduel</label>
+      <input type="range" id="slider-sweetness" min="0" max="10" step="0.5" value="3">
+      <div class="slider-scale"><span>Sec</span><span>Liquoreux</span></div>
+      <p class="step-text step-text-muted" id="text-sweetness"></p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="carbonation">
+      <div class="step-head">
+        <span class="step-num">7 / 9</span>
+        <h2>Carbonatation</h2>
+      </div>
+      <label class="slider-label" for="slider-carbonation">Intensité des bulles</label>
+      <input type="range" id="slider-carbonation" min="0" max="10" step="0.5" value="5">
+      <div class="slider-scale"><span>Plate</span><span>Très vive</span></div>
+      <p class="step-text step-text-muted" id="text-carbonation"></p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="abv">
+      <div class="step-head">
+        <span class="step-num">8 / 9</span>
+        <h2>Degré d'alcool</h2>
+      </div>
+      <label class="slider-label" for="slider-abv">ABV approximatif</label>
+      <input type="range" id="slider-abv" min="2.5" max="12" step="0.5" value="5">
+      <div class="slider-scale"><span>2,5%</span><span>12%</span></div>
+      <p class="step-text step-text-muted" id="text-abv"></p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="filtration">
+      <div class="step-head">
+        <span class="step-num">9 / 9</span>
+        <h2>Filtration</h2>
+      </div>
+      <div class="segmented" id="control-filtration" role="radiogroup" aria-label="Niveau de filtration"></div>
+      <p class="step-text" id="text-filtration"></p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="finish">Découvrir mon style</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Résultat : remplace le panneau de questions au même endroit, le verre
+       en fond continue d'afficher la recette finale sans interruption. -->
+  <section class="sheet result-sheet" id="result-panel" hidden aria-label="Résultat">
+    <p class="result-eyebrow">Votre création ressemble le plus à</p>
+    <h2 class="result-name" id="result-name">—</h2>
+    <span class="result-match" id="result-match">—</span>
+    <p class="result-description" id="result-description"></p>
+
+    <h3 class="result-subhead">Ce qui a compté dans le choix</h3>
+    <div class="result-reasons" id="result-reasons"></div>
+
+    <h3 class="result-subhead">De vraies bières de ce style</h3>
+    <div class="result-examples" id="result-examples"></div>
+
+    <button class="nav-btn nav-btn-ghost nav-btn-full" id="restart-btn">Recomposer une autre bière</button>
+  </section>
+</div>
+
+<script src="js/beer-styles-data.js"></script>
+<script src="js/beer-visual.js"></script>
+<script src="js/ui.js" defer></script>
+</body>
+</html>
