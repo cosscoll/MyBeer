@@ -53,7 +53,7 @@ jobs:
             HTML=$(curl -fsSL --max-time 8 "$URL?version=$GITHUB_SHA" || true)
             STYLE=$(curl -fsSL --max-time 8 "${URL}css/experience.css?version=$GITHUB_SHA" || true)
             JS=$(curl -fsSL --max-time 8 "${URL}js/experience.js?version=$GITHUB_SHA" || true)
-            if [[ "$HTML" == *'beer-inside-bubbles'* ]] && [[ "$STYLE" == *'translate(-50%,-25%) scale(.67)'* ]] && [[ "$JS" == *'BrewExperience'* ]]; then
+            if [[ "$HTML" == *'beer-inside-bubbles'* ]] && [[ "$STYLE" == *'translate(-50%,-46%) scale(.67)'* ]] && [[ "$JS" == *'BrewExperience'* ]]; then
               echo "PASS: public HTML, current CSS and interactive JS accessible"
               exit 0
             fi
