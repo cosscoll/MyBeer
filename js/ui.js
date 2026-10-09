@@ -18,11 +18,16 @@
     sweetness: 3,
     carbonation: 5,
     abv: 5,
-    filtration: 'limpide'
+    filtration: 'limpide',
+    acidity: 0,
+    body: 4,
+    yeast: 'clean',
+    roast: 0,
+    special: 'none'
   };
 
   var engineReady = false;
-  var STEPS = ['fermentation', 'origin', 'malt', 'hops', 'flavors', 'sweetness', 'carbonation', 'abv', 'filtration'];
+  var STEPS = ['fermentation', 'origin', 'malt', 'hops', 'flavors', 'sweetness', 'carbonation', 'abv', 'acidity', 'body', 'yeast', 'roast', 'special', 'filtration'];
   var currentStep = 0;
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -32,6 +37,7 @@
     renderHopProfile();
     renderFlavors();
     renderFiltration();
+    renderAdvancedOptions();
     wireSliders();
     wireButtons();
     renderDots();
@@ -242,7 +248,63 @@
     });
   }
 
+
+  /* -------------------- Profils sensoriels avancés -------------------- */
+
+  function renderAdvancedOptions() {
+    var yeastOptions = [
+      { id:'any', label:'Sans préférence', short:'Tous profils' },
+      { id:'clean', label:'Neutre', short:'Net, discret' },
+      { id:'esters', label:'Fruité', short:'Esters de levure' },
+      { id:'phenolic', label:'Épicé', short:'Poivre, girofle' },
+      { id:'wild', label:'Sauvage', short:'Funky, Brett' }
+    ];
+    var yeastEl=document.getElementById('control-yeast');
+    yeastOptions.forEach(function(option) {
+      var btn=document.createElement('button');
+      btn.type='button';btn.className='seg-btn'+(state.yeast===option.id?' active':'');
+      btn.setAttribute('role','radio');
+      btn.setAttribute('aria-checked',state.yeast===option.id?'true':'false');
+      btn.textContent=option.label;
+      var desc=document.createElement('small');desc.textContent=option.short;btn.appendChild(desc);
+      btn.addEventListener('click',function() {
+        state.yeast=option.id;refreshActive(yeastEl,btn);updateAll();
+      });
+      yeastEl.appendChild(btn);
+    });
+    var specialOptions=[
+      ['none','Aucune'],['smoke','Fumée'],['salt','Salée'],['wood','Boisée / fût'],
+      ['fruit','Fruits ajoutés'],['lactose','Lactée'],['coffee','Café ajouté']
+    ];
+    var specialEl=document.getElementById('control-special');
+    specialOptions.forEach(function(option) {
+      var btn=document.createElement('button');
+      btn.type='button';btn.className='chip-btn'+(state.special===option[0]?' active':'');
+      btn.setAttribute('role','radio');
+      btn.setAttribute('aria-checked',state.special===option[0]?'true':'false');
+      btn.textContent=option[1];
+      btn.addEventListener('click',function(){
+        state.special=option[0];refreshActive(specialEl,btn);updateAll();
+      });
+      specialEl.appendChild(btn);
+    });
+  }
+
+  function connectNewSlider(id,key) {
+    var el=document.getElementById('slider-'+id);
+    var out=document.getElementById('value-'+id);
+    if(!el||!out)return;
+    el.addEventListener('input',function(){
+      state[key]=Number(el.value);
+      out.textContent=el.value+'/10';
+      updateAll();
+    });
+  }
+
   function wireSliders() {
+    connectNewSlider('acidity','acidity');
+    connectNewSlider('body','body');
+    connectNewSlider('roast','roast');
     var hop = document.getElementById('slider-hop');
     hop.addEventListener('input', function () {
       state.hopAmount = parseFloat(hop.value);
@@ -359,7 +421,11 @@
   function showResult() {
     var result = computeBestMatch(state);
     document.getElementById('result-name').textContent = result.style.name;
-    document.getElementById('result-match').textContent = 'Indice de proximité : ' + result.percent + '%';
+    document.getElementById('result-match').textContent = 'Indice de ressemblance : ' + result.percent + ' / 99';
+    var confidence=document.getElementById('result-confidence');
+    if(confidence)confidence.textContent=result.isCloseCall
+      ? 'Plusieurs styles sont très proches : voici les alternatives à comparer.'
+      : 'C’est le style le plus proche parmi ' + (result.catalogSize||BEER_STYLES.length) + ' profils répertoriés.';
     document.getElementById('result-description').textContent = result.style.description;
 
     var reasonsEl = document.getElementById('result-reasons');
@@ -371,6 +437,23 @@
       reasonsEl.appendChild(p);
     });
 
+    var alternativesEl=document.getElementById('result-alternatives');
+    if(alternativesEl) {
+      alternativesEl.textContent='';
+      (result.alternatives||[]).forEach(function(candidate,index){
+        var entry=document.createElement('article');entry.className='alternative-card';
+        var title=document.createElement('h4');title.textContent=(index+2)+'. '+candidate.style.name;
+        var badge=document.createElement('span');badge.textContent=candidate.percent+' / 99';
+        badge.className='alternative-score';
+        var text=document.createElement('p');
+        text.textContent=candidate.style.distinction||candidate.style.description;
+        entry.appendChild(title);entry.appendChild(badge);entry.appendChild(text);
+        alternativesEl.appendChild(entry);
+      });
+    }
+
+    var examplesSection=document.getElementById('result-examples-section');
+    if(examplesSection)examplesSection.hidden=!(result.style.examples||[]).length;
     var examplesEl = document.getElementById('result-examples');
     examplesEl.innerHTML = '';
     (result.style.examples || []).forEach(function (ex) {
