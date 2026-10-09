@@ -1,69 +1,54 @@
-# Brasserie virtuelle — Compositeur de bière en 3D
+# MyBeer — Studio de brassage interactif
 
-Site pédagogique 100% statique (HTML/CSS/JS, aucun outil de build) sur la
-fabrication de la bière, avec un compositeur de recette et un verre rendu en
-vraie 3D CSS (perspective + transformations 3D), sans bibliothèque externe.
+Site pédagogique statique HTML/CSS/JavaScript permettant de composer un profil de bière puis de découvrir les **styles brassicoles les plus proches**. L'expérience comprend un verre animé en CSS 3D, un questionnaire sensoriel de **14 étapes**, des comparaisons de résultats et une encyclopédie consultable.
 
-## Structure du projet
+## Ce que fait le site
+
+- 14 critères : fermentation (ou « Je ne sais pas »), tradition, malt, houblon, arômes, douceur, carbonatation, degré d’alcool, acidité, corps, caractère des levures, torréfaction, signature particulière et limpidité
+- Verre en perspective 3D qui adapte couleur, mousse et bulles selon les réponses
+- Score **heuristique** multi-critères, fondé sur des profils sensoriels et non sur une probabilité statistique ; l'affichage montre le style principal et deux alternatives
+- Encyclopédie de **121 profils de styles**, avec recherche, filtres par famille, description distincte et plages d'alcool indicatives
+- Accessible sans création de compte, sans base distante ni bibliothèque graphique externe
+
+### Limites importantes
+
+**Style ≠ produit commercial.** Les styles de bière forment des familles descriptives qui évoluent. Il existe une multitude de recettes, millésimes et éditions limitées impossibles à couvrir exhaustivement dans une base figée. Certains styles ne correspondent pas à une catégorie BJCP indépendante (p. ex. appellations modernes IPA, interprétations régionales), et leurs caractéristiques peuvent varier selon les brasseries.
+
+**Résultat ≠ recette certifiée.** L’utilisateur décrit un profil désiré ; le moteur attribue des proximités descriptives, il ne calcule ni OG/FG ni IBU/ABV mesurés ni garantie de fermentation. La proximité affichée **n'est pas un taux de confiance**. Les plages d'alcool et caractéristiques sont indicatives. Les exemples commerciaux sont illustratifs et ne sont pas une base de produits en temps réel.
+
+Les descriptions sont des **synthèses originales**, basées notamment sur les sources publiques suivantes, sans reproduction intégrale de leurs notices :
+
+- [BJCP 2021 — Beer Style Guidelines](https://www.bjcp.org/style/2021/beer/)
+- [Brewers Association — Beer Style Guidelines, édition 2026](https://www.brewersassociation.org/edu/brewers-association-beer-style-guidelines/)
+
+## Structure
 
 ```
-biere-compositeur/
-├── index.html
-├── css/
-│   └── style.css
-└── js/
-    ├── beer-styles-data.js   (données pédagogiques + styles de bière réels)
-    ├── beer-visual.js        (rendu du verre en 3D CSS : perspective, transform-style, variables CSS)
-    └── ui.js                 (logique d'interface)
+index.html
+css/style.css
+css/experience.css         # mise en scène 3D
+css/knowledge.css          # questionnaire avancé et encyclopédie
+js/beer-styles-data.js     # socle historique des styles et explications
+js/beer-knowledge.js       # profils étendus et calcul sensoriel v2
+js/beer-visual.js         # fond et ambiance
+js/experience.js          # verre animé, statistiques visuelles
+js/catalog.js             # recherche et filtres
+js/ui.js                  # questionnaire et résultats
+tests/knowledge.cjs       # cohérence de la base et scénarios repères
+tests/smoke.cjs           # test DOM du parcours complet
+tests/browser.cjs         # tests Chrome ordinateur / mobile
+.github/workflows/quality.yml
 ```
 
-Aucune bibliothèque externe n'est utilisée pour la 3D : le verre est en
-vraie 3D CSS (perspective + transformations 3D + variables CSS
-personnalisées), animée nativement par le moteur du navigateur — pas de
-boucle de rendu JavaScript à maintenir, pas de contexte WebGL à charger.
+## Développement et tests
 
-## Tester en local avant de déployer
+Pas de build : servir la racine avec `python3 -m http.server 8000`, puis ouvrir `http://localhost:8000/`.
 
-Comme le site est 100% statique, un simple serveur local suffit (ouvrir
-`index.html` directement dans le navigateur via `file://` peut bloquer
-certains navigateurs pour des raisons de sécurité liées aux scripts) :
+Le workflow GitHub Actions **MyBeer — quality gate** vérifie :
+1. La syntaxe JavaScript.
+2. La cohérence des profils et des recettes de référence.
+3. Les 14 étapes et la recherche documentaire.
+4. Les parcours Chrome desktop et mobile, avec captures disponibles en artefacts.
+5. L'accès public aux fichiers sur GitHub Pages une fois déployés.
 
-```bash
-cd biere-compositeur
-python3 -m http.server 8000
-# puis ouvrez http://localhost:8000 dans votre navigateur
-```
-
-## Déployer sur GitHub Pages
-
-1. Créez un nouveau dépôt sur GitHub (par exemple `biere-compositeur`).
-2. Dans un terminal, à la racine du dossier `biere-compositeur/` :
-
-   ```bash
-   git init
-   git add .
-   git commit -m "Premier déploiement du compositeur de bière"
-   git branch -M main
-   git remote add origin https://github.com/<votre-utilisateur>/biere-compositeur.git
-   git push -u origin main
-   ```
-
-   (Préférez toujours cette méthode en ligne de commande au glisser-déposer
-   sur l'interface web de GitHub, qui aplatit parfois l'arborescence des
-   dossiers `css/` et `js/` à la racine.)
-
-3. Sur GitHub, allez dans **Settings → Pages**.
-4. Dans **Build and deployment**, choisissez **Deploy from a branch**,
-   branche `main`, dossier `/ (root)`.
-5. Après une minute ou deux, votre site est en ligne à l'adresse :
-   `https://<votre-utilisateur>.github.io/biere-compositeur/`
-
-## Mettre à jour le site plus tard
-
-```bash
-git add .
-git commit -m "Description du changement"
-git push
-```
-
-GitHub Pages republie automatiquement à chaque `push` sur `main`.
+Site public : https://cosscoll.github.io/MyBeer/
