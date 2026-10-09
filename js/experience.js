@@ -6,7 +6,7 @@ var BrewExperience = (function () {
   var bubbles = null;
   var reduced = false;
   var pulseTimer = 0;
-  var steps = ['Fermentation','Tradition','Malt','Houblon','Arômes','Sucrosité','Bulles','Alcool','Filtration'];
+  var steps = ['Fermentation','Tradition','Malt','Houblon','Arômes','Sucrosité','Bulles','Alcool','Acidité','Texture','Levure','Torréfaction','Signature','Filtration'];
 
   function byId(id) { return document.getElementById(id); }
   function clamp(n, lo, hi) { return Math.min(hi, Math.max(lo, n)); }
@@ -55,7 +55,7 @@ var BrewExperience = (function () {
 
   function setStep(index) {
     var label = byId('stage-step-label');
-    if (label) label.textContent = 'ÉTAPE ' + clamp(index, 1, 9) + '/9 · ' + (steps[index - 1] || steps[0]);
+    if (label) label.textContent = 'ÉTAPE ' + clamp(index, 1, steps.length) + '/' + steps.length + ' · ' + (steps[index - 1] || steps[0]);
   }
 
   function update(visuals, recipe) {
