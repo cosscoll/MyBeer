@@ -402,7 +402,12 @@
     panel.classList.remove('panel-in');
     void panel.offsetWidth; // force le navigateur à relancer l'animation à chaque clic
     panel.classList.add('panel-in');
-    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Le panneau de résultat gère son propre scroll sur desktop ;
+    // sur mobile, on ramène seulement le résultat dans le champ de vision.
+    panel.scrollTop = 0;
+    if (typeof panel.scrollIntoView === 'function' && window.innerWidth <= 900) {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 
   /* -------------------- Utilitaires couleur -------------------- */
