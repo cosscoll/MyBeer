@@ -114,7 +114,10 @@
       description:detail + ' Les plages d’alcool et profils sensoriels sont indicatifs, selon la recette et la brasserie.',
       examples:[],source:ref.bjcp};
   }
-  raw.forEach(function (t) {BEER_STYLES.push(addStyle(t));});
+  raw.forEach(function (t) {
+    if(t[0]==='biere-de-garde')t[10]='francaise';
+    BEER_STYLES.push(addStyle(t));
+  });
   BEER_STYLES.forEach(function(s) {
     var extra=baseExtra[s.id];
     if (extra) {
@@ -139,7 +142,7 @@
     var n=function(v,def){return typeof v==='number'&&isFinite(v)?v:def;};
     var d=0;
     var fermentation=state.fermentation;
-    if(fermentation && s.fermentation!==fermentation)
+    if(fermentation && fermentation!=='any' && s.fermentation!==fermentation)
       d+=s.fermentation==='spontanee'||fermentation==='spontanee'?3:1.7;
     d+=Math.abs(dark-s.darkness)/4*1.65;
     d+=Math.abs(n(state.hopAmount,4)-s.hop)/10*1.35;
