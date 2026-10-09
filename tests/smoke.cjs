@@ -13,7 +13,7 @@ class LocalAssets extends ResourceLoader {
 
 async function main() {
   const root = path.join(__dirname, '..');
-  for (const name of ['css/style.css','css/experience.css','js/beer-styles-data.js','js/beer-visual.js','js/experience.js','js/ui.js']) {
+  for (const name of ['css/style.css','css/experience.css','css/knowledge.css','js/beer-styles-data.js','js/beer-knowledge.js','js/catalog.js','js/beer-visual.js','js/experience.js','js/ui.js']) {
     assert.ok(fs.statSync(path.join(root, name)).size > 0, name + ' doit exister');
   }
   const messages = [];
@@ -44,7 +44,8 @@ async function main() {
   assert.equal(q('.step.active').getAttribute('data-step'), 'fermentation');
   assert.match(q('#live-abv').textContent, /5,0%/);
   assert.ok(q('#brew-stage').style.getPropertyValue('--brew-color'), 'Couleur de bière initialisée');
-  assert.equal(qa('#progress-dots .dot').length, 9, '9 étapes de progression');
+  assert.equal(qa('#progress-dots .dot').length, 14, '14 étapes de progression');
+  assert.ok(Number(q('#catalog-count').textContent.match(/\d+/)[0]) >= 80, 'Catalogue étendu');
 
   click('.step.active [data-action="next"]');
   click('.step.active [data-action="next"]');
@@ -71,19 +72,46 @@ async function main() {
   assert.equal(q('#live-abv').textContent, '7,5%');
 
   click('.step.active [data-action="next"]');
+  assert.equal(q('.step.active').getAttribute('data-step'), 'acidity');
+  q('#slider-acidity').value = '8';
+  q('#slider-acidity').dispatchEvent(new window.Event('input', {bubbles: true}));
+  assert.equal(q('#value-acidity').textContent, '8/10');
+  click('.step.active [data-action="next"]');
+  assert.equal(q('.step.active').getAttribute('data-step'), 'body');
+  q('#slider-body').value = '3';
+  q('#slider-body').dispatchEvent(new window.Event('input', {bubbles:true}));
+  assert.equal(q('#value-body').textContent, '3/10');
+  click('.step.active [data-action="next"]');
+  assert.equal(q('.step.active').getAttribute('data-step'), 'yeast');
+  assert.ok(qa('#control-yeast button').length>=4);
+  click('.step.active [data-action="next"]');
+  assert.equal(q('.step.active').getAttribute('data-step'), 'roast');
+  assert.equal(q('#value-roast').textContent, '0/10');
+  click('.step.active [data-action="next"]');
+  assert.equal(q('.step.active').getAttribute('data-step'), 'special');
+  assert.ok(qa('#control-special button').length>=6);
+  click('.step.active [data-action="next"]');
   assert.equal(q('.step.active').getAttribute('data-step'), 'filtration');
   click('.step.active [data-action="finish"]');
   assert.equal(q('#control-sheet').hidden, true, 'Compositeur masqué après fin');
   assert.equal(q('#result-panel').hidden, false, 'Résultat visible');
   assert.ok(q('#result-name').textContent.length > 2, 'Style calculé');
+  assert.equal(qa('#result-alternatives .alternative-card').length,2,'Deux styles comparables');
   assert.equal(q('#brew-stage').classList.contains('is-finished'), true);
   click('#restart-btn');
   assert.equal(q('#control-sheet').hidden, false);
   assert.equal(q('#result-panel').hidden, true);
   assert.equal(q('.step.active').getAttribute('data-step'), 'fermentation');
+  click('#catalog-open');
+  assert.equal(q('#catalog-overlay').hidden,false,'Encyclopédie ouverte');
+  q('#catalog-search').value='stout';
+  q('#catalog-search').dispatchEvent(new window.Event('input',{bubbles:true}));
+  assert.ok(qa('#catalog-grid .catalog-card').length>=4,'Recherche de styles');
+  click('#catalog-close');
+  assert.equal(q('#catalog-overlay').hidden,true,'Encyclopédie refermée');
   assert.ok(messages.length === 0, 'Erreurs JS console: ' + messages.join('; '));
 
-  console.log('PASS: 9 étapes, résultat, redémarrage, malt, couleur, bulles et alcool.');
+  console.log('PASS: 14 étapes, encyclopédie, résultat, redémarrage, couleur et critères sensoriels.');
   window.close();
 }
 main().catch(error => {console.error(error);process.exitCode = 1;});
