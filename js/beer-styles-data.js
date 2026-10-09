@@ -8,6 +8,12 @@
 /* ---- Types de fermentation ---- */
 var FERMENTATION_TYPES = [
   {
+    id: 'any',
+    label: 'Je ne sais pas',
+    short: 'Sans préférence',
+    text: "Si vous ne connaissez pas la méthode de fermentation, aucun style ne sera pénalisé sur ce critère. Le résultat privilégiera vos goûts : acidité, texture, arômes et amertume."
+  },
+  {
     id: 'haute',
     label: 'Haute (ale)',
     short: 'Rapide, chaude, fruitée',
@@ -138,6 +144,11 @@ var ORIGINS = [
     text: "La scène brassicole artisanale américaine, née dans les années 1980, a réinventé les styles européens en poussant le houblon (souvent aux arômes d'agrumes et de résine) et l'intensité bien plus loin que les traditions d'origine."
   },
   {
+    id: 'francaise',
+    label: 'Française',
+    text: "De la Bière de Garde du nord aux créations artisanales modernes, les traditions françaises rassemblent des familles variées. Choisir cette origine aide à distinguer notamment les bières de garde."
+  },
+  {
     id: 'peu-importe',
     label: 'Peu importe',
     text: "Aucune préférence de tradition brassicole : votre recette sera comparée à tous les styles, sans favoriser une origine plutôt qu'une autre."
@@ -224,7 +235,7 @@ var BEER_STYLES = [
     origin: ['iles-britanniques', 'americaine'],
     carbonation: 5,
     flavors: ['agrumes_zeste', 'fruits'],
-    description: "Créée pour supporter le voyage vers l'Inde au XIXe siècle grâce à une forte dose de houblon (conservateur naturel), l'IPA met le houblon au centre : amertume marquée, arômes intenses d'agrumes ou de résine, robe pâle à ambrée.",
+    description: "Historiquement liée aux pale ales anglaises exportées au XIXe siècle, l'IPA est aujourd'hui une famille très variée : certaines versions sont sèches et fortement amères, d'autres troubles, fruitées et plus douces en bouche.",
     examples: [
       { name: 'Lagunitas IPA', origin: 'États-Unis', note: "Une IPA californienne généreusement houblonnée, aux arômes résineux et d'agrumes très marqués." },
       { name: 'BrewDog Punk IPA', origin: 'Écosse', note: "L'IPA qui a lancé la scène craft écossaise, fruitée et volontairement provocatrice sur l'amertume." },
@@ -244,7 +255,7 @@ var BEER_STYLES = [
     origin: ['iles-britanniques'],
     carbonation: 3,
     flavors: ['cafe', 'chocolat'],
-    description: "Le stout doit sa couleur noire opaque et ses arômes de café et de cacao torréfié à une forte proportion de malt torréfié. La mousse est dense et crémeuse, l'amertume reste discrète derrière la rondeur du malt.",
+    description: "La famille des stouts se reconnaît à ses céréales très torréfiées et aux notes de café ou de cacao. Un Irish Stout est souvent sec et amer, tandis qu'un Milk Stout est plus doux et un Imperial Stout beaucoup plus puissant.",
     examples: [
       { name: 'Guinness Draught', origin: 'Irlande', note: "Le stout sec le plus connu au monde : mousse crémeuse obtenue grâce à l'azote, amertume torréfiée nette." },
       { name: "Murphy's Irish Stout", origin: 'Irlande', note: "Un peu plus doux et rond que la Guinness, avec des notes de café au lait." },
@@ -264,7 +275,7 @@ var BEER_STYLES = [
     origin: ['iles-britanniques'],
     carbonation: 3.5,
     flavors: ['chocolat', 'cafe'],
-    description: "Ancêtre du stout, le porter est une ale brune fumée et maltée, aux notes de caramel, de pain grillé et de chocolat noir, avec une amertume mesurée qui laisse toute la place au malt.",
+    description: "Le porter est une ale brune historiquement britannique, aux arômes de chocolat, de pain grillé et parfois de café. La fumée n'est pas obligatoire : les versions fumées constituent une variation spécifique.",
     examples: [
       { name: 'Fuller\'s London Porter', origin: 'Angleterre', note: "Un porter anglais classique, tout en caramel et en chocolat noir, moins torréfié qu'un stout." },
       { name: 'Anchor Porter', origin: 'États-Unis', note: "Un porter américain robuste, souvent cité comme ayant relancé le style dans les années 1970." },
@@ -342,9 +353,9 @@ var BEER_STYLES = [
     filtration: 'trouble',
     hopProfiles: [],
     origin: ['belge'],
-    carbonation: 6,
-    flavors: ['fruits'],
-    description: "Fermenté spontanément dans la région de Bruxelles avec un houblon volontairement vieilli (donc peu amer), le lambic développe une acidité et une complexité uniques grâce aux levures et bactéries sauvages qui l'ensemencent.",
+    carbonation: 2,
+    flavors: [],
+    description: "Tradition du Pajottenland et de Bruxelles : le lambic non assemblé est une bière de fermentation spontanée, souvent peu pétillante, sèche, acide et complexe. Une gueuze est un assemblage de lambics généralement refermenté en bouteille et plus effervescent.",
     examples: [
       { name: 'Cantillon Gueuze', origin: 'Belgique', note: "Brassée par l'une des dernières brasseries-lambic historiques de Bruxelles, très acidulée et sauvage." },
       { name: 'Boon Oude Geuze', origin: 'Belgique', note: "Un assemblage de lambics d'âges différents, référence classique de la gueuze traditionnelle." },
@@ -484,7 +495,7 @@ var BEER_STYLES = [
     origin: ['iles-britanniques', 'americaine'],
     carbonation: 3,
     flavors: [],
-    description: "Comme son nom l'indique, le barleywine rivalise avec le vin en degré d'alcool : une énorme quantité de malt donne une bière dense, sirupeuse et très alcoolisée, que le houblon vient à peine équilibrer. Se garde et se bonifie parfois comme un vin.",
+    description: "Le Barleywine est une ale très forte, riche et chaleureuse. Les versions anglaises mettent souvent l'accent sur le malt et les fruits secs ; les versions américaines peuvent présenter une amertume et un houblonnage très marqués.",
     examples: [
       { name: 'Sierra Nevada Bigfoot', origin: 'États-Unis', note: "Le barleywine américain de référence, dense et généreusement houblonné." },
       { name: 'Anchor Old Foghorn', origin: 'États-Unis', note: "L'un des tout premiers barleywines américains, sirupeux et intense." },
