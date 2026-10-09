@@ -61,14 +61,21 @@ async function main() {
         assert.ok(checks.beer.bottom <= checks.stage.bottom + 10, 'Le verre doit rester entièrement visible sur mobile');
       }
       await page.screenshot({path:path.join(base,'artifacts','mybeer-'+target.name+'.png'),fullPage:true,animations:'disabled'});
-      for(let i=0;i<8;i++) await page.locator('.step.active [data-action="next"]').click();
+      // Recherche en catalogue avant de commencer la navigation.
+      await page.locator('#catalog-open').click();
+      assert.equal(await page.locator('#catalog-overlay').isVisible(),true,'Encyclopédie visible');
+      await page.locator('#catalog-search').fill('stout');
+      assert.ok(await page.locator('#catalog-grid .catalog-card').count()>=4,'Styles filtrés');
+      await page.locator('#catalog-close').click();
+      for(let i=0;i<13;i++) await page.locator('.step.active [data-action="next"]').click();
       await page.locator('.step.active [data-action="finish"]').click();
       assert.equal(await page.locator('#result-panel').isVisible(),true,'Résultat visible '+target.name);
       assert.ok((await page.locator('#result-name').innerText()).trim().length>1);
+      assert.equal(await page.locator('#result-alternatives .alternative-card').count(),2,'Résultats alternatifs');
       await page.locator('#restart-btn').click();
       assert.equal(await page.locator('.step.active').getAttribute('data-step'),'fermentation','Redémarrage '+target.name);
       assert.deepEqual(errors,[],'Pas d’erreurs JavaScript '+target.name);
-      console.log('PASS CHROME '+target.name+': screenshot, dimensions, neuf étapes et résultat',JSON.stringify(checks));
+      console.log('PASS CHROME '+target.name+': screenshot, dimensions, quatorze étapes, catalogue et résultats comparés',JSON.stringify(checks));
       await page.close();
     }
   } finally {
