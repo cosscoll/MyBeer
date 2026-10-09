@@ -31,6 +31,8 @@ async function main() {
       const resp=await page.goto(url,{waitUntil:'domcontentloaded',timeout:20000});
       assert.equal(resp.status(),200,'HTTP local 200');
       await page.locator('#beer-inside-bubbles i').first().waitFor();
+      // Mesurer le layout stabilisé, pas l'image intermédiaire de l'animation d'entrée.
+      await page.waitForTimeout(1500);
       assert.equal(await page.locator('#beer-inside-bubbles i').count(),34);
       assert.equal(await page.locator('.step.active').getAttribute('data-step'),'fermentation');
       const checks=await page.evaluate(() => {
@@ -46,6 +48,7 @@ async function main() {
           liquidColor:getComputedStyle(document.querySelector('#brew-stage')).getPropertyValue('--brew-color')
         };
       });
+      console.log('GEOMETRY '+target.name+': '+JSON.stringify(checks));
       assert.ok(checks.beer.width>110 && checks.beer.height>170,'Le verre 3D doit être visible');
       assert.ok(checks.liquidColor.trim(),'Le verre reçoit la couleur de la recette');
       assert.ok(checks.documentWidth <= target.width+2,'Pas de débordement horizontal '+target.name);
@@ -54,6 +57,8 @@ async function main() {
         assert.ok(checks.beer.right < checks.sheet.left+5,'Verre séparé des contrôles');
       } else {
         assert.ok(checks.intro.bottom < checks.sheet.top, 'Le titre reste au-dessus du formulaire');
+        assert.ok(checks.beer.top > checks.intro.bottom - 5, 'Le verre doit être sous le titre');
+        assert.ok(checks.beer.bottom <= checks.stage.bottom + 10, 'Le verre doit rester entièrement visible sur mobile');
       }
       await page.screenshot({path:path.join(base,'artifacts','mybeer-'+target.name+'.png'),fullPage:true,animations:'disabled'});
       for(let i=0;i<8;i++) await page.locator('.step.active [data-action="next"]').click();
