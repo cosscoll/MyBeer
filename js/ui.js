@@ -35,6 +35,7 @@
     wireSliders();
     wireButtons();
     renderDots();
+    if (typeof BrewExperience !== 'undefined') BrewExperience.init();
 
     var ambientEl = document.getElementById('ambient-bg');
     if (ambientEl && typeof BeerVisual !== 'undefined') {
@@ -75,6 +76,7 @@
     });
     currentStep = index;
     refreshDots();
+    if (typeof BrewExperience !== 'undefined') BrewExperience.setStep(index + 1);
   }
 
   function goNext() {
@@ -93,6 +95,7 @@
     var dots = document.getElementById('progress-dots');
     if (dots) dots.hidden = true;
     showResult();
+    if (typeof BrewExperience !== 'undefined') BrewExperience.finish();
   }
 
   function restartWizard() {
@@ -102,6 +105,7 @@
     var dots = document.getElementById('progress-dots');
     if (dots) dots.hidden = false;
     showStep(0);
+    if (typeof BrewExperience !== 'undefined') BrewExperience.restart();
   }
 
   /* -------------------- Construction des contrôles -------------------- */
@@ -311,6 +315,7 @@
     if (engineReady) {
       BeerVisual.update(visuals);
     }
+    if (typeof BrewExperience !== 'undefined') BrewExperience.update(visuals, state);
   }
 
   function computeDerivedVisuals(s) {
