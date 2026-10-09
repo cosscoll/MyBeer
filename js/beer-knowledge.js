@@ -84,6 +84,48 @@
     ['smoked-porter','Smoked Porter','haute',3.6,3.8,4.3,5,7,'limpide','terreux','iles-britanniques',3.5,0,6,'clean',6,'smoke','Spécialité','Porter aux notes de malt torréfié complétées par une fumée réellement perceptible.'],
     ['coffee-stout','Coffee Stout','haute',4,3.3,5,5,8,'limpide','terreux','americaine',3,0,7,'clean',8,'coffee','Spécialité','Stout dont le café ajouté est un élément aromatique principal.']
   ];
+
+  // Familles complémentaires : lagers mondiales, spécificités régionales,
+  // ales historiques, variantes houblonnées et fermentations mixtes.
+  raw.push(
+    ['international-pale-lager','International Pale Lager','basse',.2,1.5,2,4.6,6,'limpide','noble','peu-importe',7.5,0,2,'clean',0,'none','Lager','Lager claire et rafraîchissante, peu houblonnée, catégorie internationale plus large que la Pils classique.'],
+    ['international-amber-lager','International Amber Lager','basse',1.5,2,4.5,4.6,6,'limpide','noble','peu-importe',6,0,4,'clean',1,'none','Lager','Lager commerciale ambrée, au caramel doux, moins typée qu’une Märzen traditionnelle.'],
+    ['international-dark-lager','International Dark Lager','basse',2.8,1.3,4.5,4.2,6,'limpide','noble','peu-importe',6,0,3,'clean',2,'none','Lager','Lager brune commerciale relativement douce et peu torréfiée.'],
+    ['czech-amber-lager','Czech Amber Lager','basse',1.7,3.8,4,4.4,5.8,'limpide','noble','europe-centrale',5,0,5,'clean',.8,'none','Lager','Lager tchèque ambrée au malt caramel modéré et à l’amertume noble perceptible.'],
+    ['czech-dark-lager','Czech Dark Lager','basse',3,3.2,4.5,4.4,5.8,'limpide','noble','europe-centrale',4.5,0,6,'clean',3,'none','Lager','Tmavé tchèque, brune et maltée, parfois légèrement torréfiée mais plus ronde qu’une Schwarzbier.'],
+    ['german-leichtbier','German Leichtbier','basse',.2,3,1.5,2.4,3.6,'limpide','noble','europe-centrale',6.5,0,1,'clean',0,'none','Lager','Lager allemande légère gardant une certaine fermeté d’amertume noble.'],
+    ['pre-prohibition-lager','Pre-Prohibition Lager','basse',.45,4.6,2.5,4.5,6,'limpide','noble','americaine',6,0,3,'clean',0,'none','Lager historique','Lager américaine historique plus céréalière et houblonnée que la lager industrielle moderne.'],
+    ['california-common','California Common','haute',1.6,4.4,3.5,4.5,5.5,'limpide','terreux','americaine',4,0,5,'clean',.5,'none','Ale hybride','Fermentation de levure lager à température relativement élevée ; ambrée, toastée et houblonnée.'],
+    ['american-amber','American Amber Ale','haute',1.7,5,4.2,4.4,6.1,'limpide','agrumes','americaine',5,0,5,'clean',1,'none','Ale ambrée','Caramel modéré soutenu par un houblon américain plus présent que dans une Irish Red.'],
+    ['american-brown','American Brown Ale','haute',2.6,4,4.8,4.3,6.2,'limpide','agrumes','americaine',5,0,5,'clean',3,'none','Ale brune','Brown Ale plus houblonnée et légèrement plus torréfiée que la plupart des variantes anglaises.'],
+    ['australian-sparkling','Australian Sparkling Ale','haute',.45,3.7,2,4.5,6,'limpide','terreux','peu-importe',8,0,3,'esters',0,'none','Ale blonde','Ale australienne vive, fortement pétillante, à fermentation expressive et finale sèche.'],
+    ['english-golden','British Golden Ale','haute',.28,4.8,1.8,3.8,5,'limpide','terreux','iles-britanniques',3.5,0,2,'esters',0,'none','Ale anglaise','Golden ale sèche et houblonnée, plus claire qu’une Bitter traditionnelle.'],
+    ['english-porter','English Porter','haute',3.1,2.6,4.5,4,5.4,'limpide','terreux','iles-britanniques',3.5,0,5,'esters',4.5,'none','Porter','Porter anglais chocolaté, avec une torréfaction plus ronde qu’un American Porter.'],
+    ['pre-prohibition-porter','Pre-Prohibition Porter','haute',3.2,4.6,4.5,4.5,6,'limpide','terreux','americaine',5,0,6,'clean',5,'none','Porter historique','Porter américain historique souvent marqué par le houblon et des céréales complémentaires.'],
+    ['foreign-extra-stout','Foreign Extra Stout','haute',4,5.5,3.8,6.3,8,'limpide','terreux','iles-britanniques',4,0,7,'clean',8,'none','Stout','Plus alcoolisé et puissant qu’un stout sec ordinaire, mais moins massif qu’un Imperial Stout.'],
+    ['tropical-stout','Tropical Stout','haute',4,2.8,7.4,5.5,8,'limpide','terreux','peu-importe',4,0,8,'esters',6,'none','Stout','Stout chaleureux et doux, aux notes fruitées, produit notamment dans les régions tropicales.'],
+    ['irish-extra-stout','Irish Extra Stout','haute',4,5.2,2.7,5.5,6.5,'limpide','terreux','iles-britanniques',3.3,0,5,'clean',8,'none','Stout','Plus corsé et alcoolisé qu’un Irish Stout traditionnel, conserve une finale sèche.'],
+    ['old-ale','Old Ale','haute',2.5,2,7.2,5.5,9,'limpide','terreux','iles-britanniques',2.8,0,9,'esters',1,'none','Ale forte','Forte ale anglaise maltée, parfois affinée, aux notes de fruits secs et d’oxydation noble.'],
+    ['english-barleywine','English Barleywine','haute',2.7,3.3,8,8,12,'limpide','terreux','iles-britanniques',3,0,10,'esters',1,'none','Ale forte','Barleywine anglaise riche en malt, caramel et fruits secs ; houblon généralement secondaire.'],
+    ['american-barleywine','American Barleywine','haute',2.1,7.8,6.5,8,12,'limpide','agrumes','americaine',3.5,0,9,'esters',1,'none','Ale forte','Barleywine américain souvent plus intensément houblonné que l’anglais.'],
+    ['american-strong-ale','American Strong Ale','haute',1.7,7,5.5,6.3,10,'limpide','agrumes','americaine',4.5,0,8,'esters',1,'none','Ale forte','Ale américaine puissante et amère, à mi-chemin de l’IPA forte et des strong ales maltées.'],
+    ['trappist-single','Trappist Single / Belgian Single','haute',.3,3.5,1.8,4.8,6,'limpide','noble','belge',7,0,2,'phenolic',0,'none','Abbaye','Bière monastique belge blonde, sèche et épicée, moins alcoolisée qu’une Tripel.'],
+    ['faro','Faro (lambic édulcoré)','spontanee',1,.8,6,4,6,'limpide','terreux','belge',4,5,5,'wild',0,'none','Fermentation spontanée','Lambic auquel on apporte de la douceur : nettement plus sucré qu’un lambic sec traditionnel.'],
+    ['fruited-gose','Gose aux fruits','haute',.75,.7,3,3.8,6,'trouble','agrumes','europe-centrale',6,7,3,'clean',0,'fruit','Acide','Gose moderne combinant l’acidité saline et des fruits ajoutés.'],
+    ['mixed-fermentation-saison','Saison à fermentation mixte','haute',.65,3,1.8,5,8,'trouble','terreux','belge',7,5,3,'wild',0,'none','Acide','Saison sèche aux notes de Brettanomyces ou d’acidité, distincte d’une Saison classique.'],
+    ['grisette','Grisette','haute',.38,3.2,1.5,3.5,5,'trouble','terreux','belge',7,1,2,'phenolic',0,'none','Ale belge','Cousine légère et sèche de la Saison, avec notes céréalières et fermentation expressive.'],
+    ['sahti','Sahti','haute',2,1,8,6,11,'trouble','terreux','peu-importe',1,0,9,'esters',0,'none','Historique','Tradition finlandaise utilisant souvent des branches de genévrier et une faible carbonatation.'],
+    ['grodziskie','Grodziskie','haute',.25,4.5,1,2.5,3.3,'limpide','noble','europe-centrale',9,0,1,'clean',0,'smoke','Historique','Bière polonaise de blé fumé, très légère en alcool et très pétillante.'],
+    ['roggenbier','Roggenbier','haute',1.8,2.8,4,4.5,6,'trouble','noble','europe-centrale',6,0,7,'phenolic',1,'none','Historique','Ale allemande au seigle donnant une texture épaisse et un caractère épicé.'],
+    ['kentucky-common','Kentucky Common','haute',1.6,2.5,3,4,5.5,'limpide','terreux','americaine',5,0,3,'clean',.5,'none','Historique','Ale américaine historique ambrée, légère et céréalière, normalement non acide.'],
+    ['brut-ipa','Brut IPA','haute',.35,6.3,0,5.5,7.5,'limpide','agrumes','americaine',8,0,1.5,'clean',0,'none','IPA','IPA très atténuée et sèche, avec une effervescence qui rappelle parfois les vins mousseux.'],
+    ['cold-ipa','Cold IPA (interprétation)','basse',.38,8,1,6,8,'limpide','agrumes','americaine',6,0,3,'clean',0,'none','IPA','IPA à profil de fermentation très net, souvent élaborée avec des levures et températures de type lager.'],
+    ['milkshake-ipa','Milkshake IPA','haute',.55,3.4,7,5.5,7.5,'trouble','agrumes','americaine',4,0,8,'esters',0,'lactose','IPA','IPA crémeuse et douce, fréquemment associée au lactose et aux fruits ; différente d’une Hazy IPA classique.'],
+    ['sour-ipa','Sour IPA','haute',.6,3.7,3.2,5,7.5,'trouble','agrumes','americaine',5.5,7,4,'clean',0,'none','IPA','Alliance moderne de houblonnage aromatique de type IPA et d’acidité lactique.'],
+    ['pumpkin-ale','Pumpkin / Spiced Ale','haute',1.8,2.5,5.8,4.5,7,'limpide','terreux','americaine',4.5,0,6,'esters',.5,'none','Spécialité','Bière de saison aux épices de pâtisserie et parfois à la courge, base stylistique variable.'],
+    ['honey-ale','Honey Beer (famille)','haute',.8,2.5,5,4,8,'limpide','noble','peu-importe',5,0,4,'clean',0,'none','Spécialité','Bière intégrant du miel ; son caractère peut être très sec si les sucres fermentent complètement.']
+  );
+
   var baseExtra = {
     pils:[0,3,'clean',0,'none','Lager','Pils traditionnelle blonde : le degré de sécheresse et l’amertume distinguent les variantes tchèque et allemande.'],
     'pale-ale':[0,4,'esters',0,'none','Ale pâle','Ale équilibrée : moins de houblon qu’une IPA et plus d’expression du malt.'],
