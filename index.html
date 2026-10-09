@@ -62,6 +62,7 @@
       <h1>MyBeer</h1>
       <p class="tagline">Le studio de brassage interactif</p>
     </div>
+    <button type="button" class="catalog-open" id="catalog-open">Explorer les styles <span id="catalog-count"></span></button>
   </div>
 </header>
 
@@ -72,7 +73,7 @@
 
     <div class="step active" data-step="fermentation">
       <div class="step-head">
-        <span class="step-num">1 / 9</span>
+        <span class="step-num">1 / 14</span>
         <h2>Fermentation</h2>
       </div>
       <div class="segmented" id="control-fermentation" role="radiogroup" aria-label="Type de fermentation"></div>
@@ -85,7 +86,7 @@
 
     <div class="step" data-step="origin">
       <div class="step-head">
-        <span class="step-num">2 / 9</span>
+        <span class="step-num">2 / 14</span>
         <h2>Tradition brassicole</h2>
       </div>
       <div class="segmented" id="control-origin" role="radiogroup" aria-label="Origine / tradition brassicole"></div>
@@ -98,7 +99,7 @@
 
     <div class="step" data-step="malt">
       <div class="step-head">
-        <span class="step-num">3 / 9</span>
+        <span class="step-num">3 / 14</span>
         <h2>Malt de base</h2>
       </div>
       <div class="swatch-row" id="control-malt" role="radiogroup" aria-label="Malt de base"></div>
@@ -111,7 +112,7 @@
 
     <div class="step" data-step="hops">
       <div class="step-head">
-        <span class="step-num">4 / 9</span>
+        <span class="step-num">4 / 14</span>
         <h2>Houblon</h2>
       </div>
       <div class="segmented" id="control-hop-profile" role="radiogroup" aria-label="Profil de houblon"></div>
@@ -129,7 +130,7 @@
 
     <div class="step" data-step="flavors">
       <div class="step-head">
-        <span class="step-num">5 / 9</span>
+        <span class="step-num">5 / 14</span>
         <h2>Arômes complémentaires</h2>
       </div>
       <div class="chip-row" id="control-flavors" role="group" aria-label="Arômes complémentaires"></div>
@@ -142,7 +143,7 @@
 
     <div class="step" data-step="sweetness">
       <div class="step-head">
-        <span class="step-num">6 / 9</span>
+        <span class="step-num">6 / 14</span>
         <h2>Sucrosité</h2>
       </div>
       <label class="slider-label" for="slider-sweetness">Taux de sucre résiduel</label>
@@ -157,7 +158,7 @@
 
     <div class="step" data-step="carbonation">
       <div class="step-head">
-        <span class="step-num">7 / 9</span>
+        <span class="step-num">7 / 14</span>
         <h2>Carbonatation</h2>
       </div>
       <label class="slider-label" for="slider-carbonation">Intensité des bulles</label>
@@ -172,7 +173,7 @@
 
     <div class="step" data-step="abv">
       <div class="step-head">
-        <span class="step-num">8 / 9</span>
+        <span class="step-num">8 / 14</span>
         <h2>Degré d'alcool</h2>
       </div>
       <label class="slider-label" for="slider-abv">ABV approximatif</label>
@@ -185,16 +186,87 @@
       </div>
     </div>
 
+    <div class="step" data-step="acidity">
+      <div class="step-head">
+        <span class="step-num">9 / 14</span>
+        <h2>Acidité</h2>
+      </div>
+      <label class="slider-label" for="slider-acidity">Intensité de la sensation acidulée : <output id="value-acidity">0/10</output></label>
+      <input type="range" id="slider-acidity" min="0" max="10" step="1" value="0">
+      <div class="slider-scale"><span>Pas d'acidité</span><span>Très acidulée</span></div>
+      <p class="step-text step-text-muted">Le goût acide d'une Gueuze, Berliner Weisse ou Gose est différent de l'amertume du houblon. Zéro correspond à la plupart des lagers et ales classiques.</p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="body">
+      <div class="step-head">
+        <span class="step-num">10 / 14</span>
+        <h2>Texture en bouche</h2>
+      </div>
+      <label class="slider-label" for="slider-body">Corps / rondeur : <output id="value-body">4/10</output></label>
+      <input type="range" id="slider-body" min="0" max="10" step="1" value="4">
+      <div class="slider-scale"><span>Légère, fluide</span><span>Dense, veloutée</span></div>
+      <p class="step-text step-text-muted">Le corps reflète la sensation de texture, pas uniquement la sucrosité : l'avoine, le blé et les dextrines peuvent rendre la bière plus onctueuse.</p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="yeast">
+      <div class="step-head">
+        <span class="step-num">11 / 14</span>
+        <h2>Arômes de levure</h2>
+      </div>
+      <div class="segmented" id="control-yeast" role="radiogroup" aria-label="Caractère aromatique de la fermentation"></div>
+      <p class="step-text step-text-muted">Les notes fruitées ou épicées peuvent venir des levures, sans ajout de fruits ni d'épices. Une Hefeweizen a ainsi souvent un profil banane/girofle.</p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="roast">
+      <div class="step-head">
+        <span class="step-num">12 / 14</span>
+        <h2>Torréfaction</h2>
+      </div>
+      <label class="slider-label" for="slider-roast">Intensité grillée / café : <output id="value-roast">0/10</output></label>
+      <input type="range" id="slider-roast" min="0" max="10" step="1" value="0">
+      <div class="slider-scale"><span>Céréale fraîche</span><span>Café très torréfié</span></div>
+      <p class="step-text step-text-muted">Un Schwarzbier peut être noir tout en restant léger, tandis qu'un Imperial Stout peut présenter une torréfaction puissante : couleur et intensité sont distinctes.</p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
+    <div class="step" data-step="special">
+      <div class="step-head">
+        <span class="step-num">13 / 14</span>
+        <h2>Signature particulière</h2>
+      </div>
+      <div class="chip-row feature-options" id="control-special" role="radiogroup" aria-label="Signature particulière de la bière"></div>
+      <p class="step-text step-text-muted">Fumé, salin, café ajouté, fruits, lactose ou fût : ces caractéristiques distinguent des sous-familles. « Aucune » convient à une bière classique.</p>
+      <div class="step-nav">
+        <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
+        <button class="nav-btn" data-action="next">Suivant</button>
+      </div>
+    </div>
+
     <div class="step" data-step="filtration">
       <div class="step-head">
-        <span class="step-num">9 / 9</span>
+        <span class="step-num">14 / 14</span>
         <h2>Filtration</h2>
       </div>
       <div class="segmented" id="control-filtration" role="radiogroup" aria-label="Niveau de filtration"></div>
       <p class="step-text" id="text-filtration"></p>
       <div class="step-nav">
         <button class="nav-btn nav-btn-ghost" data-action="prev">Précédent</button>
-        <button class="nav-btn" data-action="finish">Découvrir mon style</button>
+        <button class="nav-btn" data-action="finish">Découvrir mes styles</button>
       </div>
     </div>
 
@@ -206,19 +278,50 @@
     <p class="result-eyebrow">Votre création ressemble le plus à</p>
     <h2 class="result-name" id="result-name">—</h2>
     <span class="result-match" id="result-match">—</span>
+    <p class="result-confidence" id="result-confidence"></p>
     <p class="result-description" id="result-description"></p>
 
     <h3 class="result-subhead">Ce qui a compté dans le choix</h3>
     <div class="result-reasons" id="result-reasons"></div>
 
-    <h3 class="result-subhead">De vraies bières de ce style</h3>
-    <div class="result-examples" id="result-examples"></div>
+    <h3 class="result-subhead">Deux autres styles proches</h3>
+    <div class="result-alternatives" id="result-alternatives"></div>
+    <div id="result-examples-section">
+      <h3 class="result-subhead">Exemples commerciaux vérifiés dans notre sélection</h3>
+      <div class="result-examples" id="result-examples"></div>
+    </div>
+    <p class="result-disclaimer">Résultat indicatif basé sur des profils de styles, pas sur l'analyse chimique d'une recette ni un catalogue exhaustif de marques. Le score est un indice comparatif, pas une probabilité.</p>
+    <button class="nav-btn nav-btn-ghost nav-btn-full" type="button" id="result-open-catalog">Explorer le catalogue</button>
 
     <button class="nav-btn nav-btn-ghost nav-btn-full" id="restart-btn">Recomposer une autre bière</button>
   </section>
 </div>
 
+
+<!-- Bibliothèque consultable, indépendante du questionnaire. -->
+<section class="catalog-overlay" id="catalog-overlay" hidden aria-label="Encyclopédie des styles de bière" role="dialog" aria-modal="true" aria-labelledby="catalog-title">
+  <div class="catalog-dialog">
+    <div class="catalog-heading">
+      <div><p class="catalog-kicker">MYBEER · L'ENCYCLOPÉDIE</p><h2 id="catalog-title">Les styles de bière</h2></div>
+      <button type="button" class="catalog-close" id="catalog-close" aria-label="Fermer l'encyclopédie">×</button>
+    </div>
+    <p class="catalog-lead">Explorez les familles, leurs caractéristiques et les différences entre styles proches. Cette base recense des styles, pas toutes les recettes de chaque brasserie.</p>
+    <div class="catalog-filters">
+      <label class="catalog-field">Rechercher un style<input type="search" id="catalog-search" placeholder="IPA, porter, belge, lager…"></label>
+      <label class="catalog-field">Famille<select id="catalog-family"><option value="">Toutes les familles</option></select></label>
+    </div>
+    <p class="catalog-total" id="catalog-total" aria-live="polite"></p>
+    <div class="catalog-grid" id="catalog-grid"></div>
+    <p class="catalog-sources">Synthèse pédagogique originale, librement inspirée de taxonomies publiques :
+      <a href="https://www.bjcp.org/style/2021/beer/" target="_blank" rel="noopener noreferrer">BJCP 2021</a> et
+      <a href="https://www.brewersassociation.org/edu/brewers-association-beer-style-guidelines/" target="_blank" rel="noopener noreferrer">Brewers Association 2026</a>.
+      Les fourchettes sont indicatives et les styles évoluent. Ce site ne revendique pas l'exhaustivité des bières commerciales.
+    </p>
+  </div>
+</section>
+
 <script src="js/beer-styles-data.js"></script>
+<script src="js/beer-knowledge.js"></script>
 <script src="js/beer-visual.js"></script>
 <script src="js/experience.js" defer></script>
 <script src="js/ui.js" defer></script>
