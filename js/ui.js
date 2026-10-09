@@ -9,7 +9,7 @@
   'use strict';
 
   var state = {
-    fermentation: 'haute',
+    fermentation: 'any',
     origin: 'peu-importe',
     malt: 'pale',
     hopProfile: 'noble',
@@ -21,7 +21,7 @@
     filtration: 'limpide',
     acidity: 0,
     body: 4,
-    yeast: 'clean',
+    yeast: 'any',
     roast: 0,
     special: 'none'
   };
